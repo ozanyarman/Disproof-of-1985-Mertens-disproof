@@ -1,0 +1,264 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      8484,        256]
+NotebookOptionsPosition[      7700,        234]
+NotebookOutlinePosition[      8090,        250]
+CellTagsIndexPosition[      8047,        247]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"numZeros", "=", "100000"}], ";", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"test", " ", "with", " ", "3"}], ",", 
+     RowBox[{"then", " ", "2000"}], ",", 
+     RowBox[{"then", " ", "scale", " ", "up"}]}], "*)"}], 
+   RowBox[{"prec", "=", "250"}], ";"}], "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"1.", " ", "Compute", " ", "the", " ", 
+     RowBox[{"zeros", "--"}], " ", "this", " ", "list", " ", "stays", " ", 
+     "sacred"}], ",", 
+    RowBox[{"never", " ", "reassigned"}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"gammas", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Im", "[", 
+       RowBox[{"N", "[", 
+        RowBox[{
+         RowBox[{"ZetaZero", "[", "n", "]"}], ",", "prec"}], "]"}], "]"}], 
+      ",", 
+      RowBox[{"{", 
+       RowBox[{"n", ",", "1", ",", "numZeros"}], "}"}]}], "]"}]}], ";"}], 
+  "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Guard", " ", "against", " ", "a", " ", "non"}], "-", "list"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"!", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"ListQ", "[", "gammas", "]"}], "&&", 
+       RowBox[{
+        RowBox[{"Length", "[", "gammas", "]"}], "==", "numZeros"}]}], ")"}]}],
+     ",", 
+    RowBox[{
+     RowBox[{"Print", "[", 
+      RowBox[{"\"\<FATAL: gammas is not a list -> \>\"", ",", 
+       RowBox[{"Head", "[", "gammas", "]"}]}], "]"}], ";", 
+     RowBox[{"Abort", "[", "]"}]}]}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Precision check : \>\"", ",", 
+    RowBox[{"Precision", "[", 
+     RowBox[{"gammas", "[", 
+      RowBox[{"[", "1", "]"}], "]"}], "]"}]}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Print", "[", 
+    RowBox[{"\"\<First zero      : \>\"", ",", 
+     RowBox[{"N", "[", 
+      RowBox[{
+       RowBox[{"gammas", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], ",", "12"}], "]"}]}], "]"}], ";"}], 
+  "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"2.", " ", "Clean", " ", 
+     RowBox[{"formatter", ":", 
+      RowBox[{"250", " ", "significant", " ", "digits"}]}]}], ",", 
+    RowBox[{"no", " ", "backtick"}], ",", 
+    RowBox[{"no", " ", "marker"}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"fmt", "[", "x_", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"d", ",", "e"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"d", ",", "e"}], "}"}], "=", 
+        RowBox[{"RealDigits", "[", 
+         RowBox[{"x", ",", "10", ",", "prec"}], "]"}]}], ";", 
+       RowBox[{"(*", 
+        RowBox[{"prec", " ", "significant", " ", "digits"}], "*)"}], 
+       RowBox[{"StringInsert", "[", 
+        RowBox[{
+         RowBox[{"StringJoin", "[", 
+          RowBox[{"ToString", "/@", "d"}], "]"}], ",", "\"\<.\>\"", ",", 
+         RowBox[{"e", "+", "1"}]}], "]"}]}]}], "]"}]}], ";"}], "\n", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"2", 
+    RowBox[{"b", ".", "TEST"}], " ", "the", " ", "formatter", " ", "on", " ", 
+    "ONE", " ", "element", " ", "before", " ", "mapping", " ", "everything"}],
+    "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<fmt test        : \>\"", ",", 
+    RowBox[{"StringTake", "[", 
+     RowBox[{
+      RowBox[{"fmt", "[", 
+       RowBox[{"gammas", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "]"}], ",", "20"}], "]"}], ",", 
+    "\"\< ...\>\""}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Head", "[", 
+       RowBox[{"fmt", "[", 
+        RowBox[{"gammas", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "]"}], "]"}], "=!=", "String"}], ",", 
+     RowBox[{
+      RowBox[{
+      "Print", "[", "\"\<FATAL: fmt did not return a string\>\"", "]"}], ";", 
+      
+      RowBox[{"Abort", "[", "]"}]}]}], "]"}], ";"}], "\n", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"3.", " ", "Build", " ", "the", " ", "comma"}], "-", 
+    RowBox[{"separated", " ", "text"}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rawText", "=", 
+    RowBox[{
+     RowBox[{"StringRiffle", "[", 
+      RowBox[{
+       RowBox[{"fmt", "/@", "gammas"}], ",", "\"\<,\>\""}], "]"}], "<>", 
+     "\"\<,\>\""}]}], ";"}], "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"4.", " ", "Write", " ", "plain", " ", "text"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"txtPath", "=", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{
+     "$HomeDirectory", ",", "\"\<Desktop\>\"", ",", "\"\<gammas250.txt\>\""}],
+      "}"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"str", "=", 
+   RowBox[{"OpenWrite", "[", "txtPath", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"WriteString", "[", 
+   RowBox[{"str", ",", "rawText"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Close", "[", "str", "]"}], ";"}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Done -> \>\"", ",", "txtPath"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.9906535154725733`*^9, 3.990653535015527*^9}},
+ CellLabel->"In[49]:=",ExpressionUUID->"be1736c3-b05f-49cf-a9dc-2cac7bd2af43"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Precision check : \"\>", "\[InvisibleSpace]", 
+   "250.1502434489547`"}],
+  SequenceForm["Precision check : ", 250.1502434489547],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.991050677045607*^9},
+ CellLabel->
+  "During evaluation of \
+In[49]:=",ExpressionUUID->"a1b38012-d8b5-4a0c-b388-03b6771a847f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"First zero      : \"\>", "\[InvisibleSpace]", 
+   "14.13472514173469379045725198356247027078`12."}],
+  SequenceForm[
+  "First zero      : ", 14.13472514173469379045725198356247027078`12.],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.991050677050291*^9},
+ CellLabel->
+  "During evaluation of \
+In[49]:=",ExpressionUUID->"4b2e0a93-bb4d-4ab8-a200-19284e9e0e70"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"fmt test        : \"\>", 
+   "\[InvisibleSpace]", "\<\"14.13472514173469379\"\>", 
+   "\[InvisibleSpace]", "\<\" ...\"\>"}],
+  SequenceForm["fmt test        : ", "14.13472514173469379", " ..."],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.9910506770529633`*^9},
+ CellLabel->
+  "During evaluation of \
+In[49]:=",ExpressionUUID->"40e579fc-5304-4f5e-a8d9-955d7d5d5074"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Done -> \"\>", 
+   "\[InvisibleSpace]", "\<\"/Users/ozanyarman/Desktop/gammas250.txt\"\>"}],
+  SequenceForm["Done -> ", "/Users/ozanyarman/Desktop/gammas250.txt"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.9910507211009808`*^9},
+ CellLabel->
+  "During evaluation of \
+In[49]:=",ExpressionUUID->"502ace75-45ce-40c8-8696-d6b2e74c5bef"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 911},
+WindowMargins->{{4, Automatic}, {Automatic, 3}},
+FrontEndVersion->"12.3 for Mac OS X x86 (64-bit) (May 11, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"f049ebd2-2eea-4f42-ba37-3c366abca9ca"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 5475, 160, 682, "Input",ExpressionUUID->"be1736c3-b05f-49cf-a9dc-2cac7bd2af43"],
+Cell[CellGroupData[{
+Cell[6080, 186, 356, 9, 24, "Print",ExpressionUUID->"a1b38012-d8b5-4a0c-b388-03b6771a847f"],
+Cell[6439, 197, 414, 10, 24, "Print",ExpressionUUID->"4b2e0a93-bb4d-4ab8-a200-19284e9e0e70"],
+Cell[6856, 209, 422, 10, 24, "Print",ExpressionUUID->"40e579fc-5304-4f5e-a8d9-955d7d5d5074"],
+Cell[7281, 221, 391, 9, 24, "Print",ExpressionUUID->"502ace75-45ce-40c8-8696-d6b2e74c5bef"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
