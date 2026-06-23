@@ -2,7 +2,7 @@
 
 This repository contains the high-precision Wolfram Mathematica ecosystem and underlying dataset used to independently audit, replicate, and deconstruct the celebrated 1985 disproof of the Mertens conjecture by Andrew Odlyzko and Herman te Riele. 
 
-Through a systematic expansion of the zero spectrum to 100,000 non-trivial zeros processed at 250-digit arithmetical precision, this framework isolates the **"Double Loop Execution" anomaly**—an evaluation-side arithmetic oversight involving an inadvertent factor of 2 that accounts for the historical, non-replicable peak of $1.06$. Our clean, decoupled array-caching implementation demonstrates that the true physical ceiling of the zero spectrum under perfect phase alignment is rigidly bounded near $\sim 0.53$.
+Through a systematic expansion of the zero spectrum to 100,000 non-trivial zeros processed at 250-digit arithmetical precision, our framework isolates the existence of a **"Double Loop Execution" anomaly**, which is an evaluation-side arithmetic oversight involving an inadvertent **factor of 2** that accounts for the historical, non-replicable peak of $1.06$. Our clean, decoupled array-caching implementation demonstrates that the true physical ceiling of the zero spectrum under perfect phase alignment is rigidly bounded near $\sim 0.53$.
 
 ---
 
@@ -10,11 +10,11 @@ Through a systematic expansion of the zero spectrum to 100,000 non-trivial zeros
 
 ### 1. Computational Core & Verification Notebooks
 
-* **`Mertens-Riemann-zeros-CALCULATE-100000.nb`** The primary engine responsible for ingesting, scaling, and handling the core transcendental calculations across the full 100,000 non-trivial zero spectrum. It contains the vectorized algorithms necessary to construct the massive multi-dimensional lattice models without precision loss.
+* **`Mertens-Riemann-zeros-CALCULATE-100000.nb`** The primary engine responsible for calculating the full 100,000 non-trivial zero spectrum at 250-digit arithmetical precision. it outputs a text file, whose comma separators you can manually replace by spaces.
 
-* **`Mertens-Riemann-zeros-ANALYTICAL-CHECK_RAWDATA-calculation-FINAL.nb`** A diagnostic and verification notebook focused on validating data integrity. This script manually cross-examines raw mathematical invariants (such as calculating the absolute derivative $|\zeta'(\rho_1)| \approx 0.793166$ and checking it against the raw dataset) to guarantee that the imported files are mathematically uncorrupted.
+* **`Mertens-Riemann-zeros-ANALYTICAL-CHECK_RAWDATA-calculation-FINAL.nb`** This notebook creates the amplitude and phase information in regards to the non-trivial Riemann zeta zeros. It outputs two text files that need no manual adjustment.
 
-* **`Mertens-Riemann-100000zeros-ANALYTICAL-CHECK_Factor-of-2-miscalculation-FINAL.nb`** The definitive forensic execution log and script. It runs the four main mathematical framework strategies to pin down the exact failure mechanism of the historical code:
+* **`Mertens-Riemann-100000zeros-ANALYTICAL-CHECK_Factor-of-2-miscalculation-FINAL.nb`** The definitive forensic execution log and script. It runs our four main Mathematica code strategies to pin down the exact failure mechanism of the alleged historical 1985 disproof:
     * *Code A (Wide Grid Sweep):* Localizes spatial neighborhoods around the LLL target coordinate.
     * *Code B (Integer Destruction Bypass):* Bypasses machine-integer type promotion bugs.
     * *Code C (Pure Phase Alignment):* Simulates perfect phase intersections to locate the absolute theoretical physical ceiling ($\sim 0.528537$).
@@ -22,7 +22,7 @@ Through a systematic expansion of the zero spectrum to 100,000 non-trivial zeros
 
 ### 2. High-Precision Pristine Datasets
 
-These space-separated text files store the underlying spectral components of the Riemann zeta function, compiled and verified with up to 250 digits of tracking precision to rule out truncation errors during high-dimension Lattice Basis Reduction (LLL).
+The outputted text files store the underlying spectral components of the Riemann zeta function, compiled and verified with up to 250 digits of tracking precision to rule out truncation errors during high-dimension Lattice Basis Reduction (LLL).
 
 * **`high_prec_zeros.txt`** Contains the highly precise imaginary parts ($\gamma_i$) of the first 100,000 non-trivial zeros of the Riemann zeta function, acting as the frequency components of the wave sum.
 * **`high_prec_alpha.txt`** Contains the raw amplitude coefficients ($\alpha_i = 1/|\rho_i \zeta'(\rho_i)|$). These govern the maximum energy envelope of each individual oscillator in the Ingham-type smoothed sum.
@@ -32,11 +32,11 @@ These space-separated text files store the underlying spectral components of the
 
 ## Core Algorithmic Optimization
 
-Standard grid-sweep implementations suffer from an $\mathcal{O}(M \times N)$ computational bottleneck because they recalculate the transcendental Ingham weight kernel from scratch inside nested spatial loops. 
+Standard grid-sweep implementations suffer from an $\mathcal{O}(M \times N)$ computational bottleneck, because they recalculate the transcendental Ingham weight kernel from scratch inside nested spatial loops. 
 
-This framework implements **Decoupled Array-Caching ($\mathcal{O}(M + N)$)**:
+Our framework implements **Decoupled Array-Caching ($\mathcal{O}(M + N)$)**:
 1. The static weight structure is computed exactly once across the discrete zero spectrum and cached in memory.
-2. The outer spatial coordinate loops reference this array via high-speed, vectorized linear algebra operations, shifting the runtime from an intensive transcendental compute loop to an $\mathcal{O}(1)$ memory array-index lookup.
+2. The outer spatial coordinate loops reference this array via high-speed, vectorized linear algebra operations; thus shifting the runtime from an intensive transcendental compute loop to an $\mathcal{O}(1)$ memory array-index lookup.
 
 ---
 
@@ -58,3 +58,4 @@ The calculations generated by the files in this repository map to the following 
 * **Environment:** Wolfram Mathematica (Version 12.0 or higher recommended to handle advanced high-precision array vectorization).
 * **Setup:** Ensure that all three `.txt` data files reside in your target directory as configured via the `SetDirectory[...]` directive inside the notebooks.
 * **Execution:** Run `Mertens-Riemann-100000zeros-ANALYTICAL-CHECK_Factor-of-2-miscalculation-FINAL.nb` to independently reproduce the 250-digit local optimization scans and see the absolute validation metrics.
+* * **Citation:** Refer to Prof. Dr. Ozan Yarman and Prof. Dr. Tolga Yarman together whenever you are making public or commercial use of this discovery.
