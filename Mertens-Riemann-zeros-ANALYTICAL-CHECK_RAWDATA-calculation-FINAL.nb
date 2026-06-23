@@ -1,0 +1,278 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      9330,        268]
+NotebookOptionsPosition[      8984,        254]
+NotebookOutlinePosition[      9375,        270]
+CellTagsIndexPosition[      9332,        267]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"::", "Title", "::"}], "*)"}], 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Fast", " ", "100"}], ",", 
+    RowBox[{
+    "000", " ", "Amplitude", " ", "and", " ", "Phase", " ", "Parameter", " ", 
+     
+     RowBox[{"Generator", ":", 
+      RowBox[{"Clean", " ", "Export"}]}]}]}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "targetDirectory", "=", 
+     "\"\</Users/ozanyarman/Documents/Wolfram \
+Mathematica/mertens-main/high_prec/\>\""}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"inputFile", "=", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{"targetDirectory", ",", "\"\<high_prec_zeros.txt\>\""}], "}"}],
+       "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<=== 1. INITIALIZING DATA ===\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"Not", "[", 
+       RowBox[{"FileExistsQ", "[", "inputFile", "]"}], "]"}], ",", 
+      RowBox[{
+       RowBox[{"Print", "[", "\"\<ERROR: File not found!\>\"", "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Abort", "[", "]"}]}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+   "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"MODIFICATION", ":", 
+      RowBox[{
+      "Read", " ", "the", " ", "whole", " ", "file", " ", "as", " ", 
+       "text"}]}], ",", 
+     RowBox[{"then", " ", "split", " ", "by", " ", "spaces"}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rawText", "=", 
+     RowBox[{"Import", "[", 
+      RowBox[{"inputFile", ",", "\"\<String\>\""}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"stringTokens", "=", 
+     RowBox[{"StringSplit", "[", "rawText", "]"}]}], ";", 
+    RowBox[{"(*", 
+     RowBox[{"Automatically", " ", "handles", " ", "any", " ", 
+      RowBox[{"spaces", "/", "tabs"}]}], "*)"}], 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{
+      "Convert", " ", "text", " ", "tokens", " ", "directly", " ", "into", 
+       " ", "250"}], "-", 
+      RowBox[{"digit", " ", "Mathematica", " ", "numbers"}]}], "*)"}], 
+    RowBox[{"zerosRaw", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"ToExpression", "[", 
+         RowBox[{"#", "<>", "\"\<`250\>\""}], "]"}], "&"}], ",", 
+       "stringTokens"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"totalZeros", "=", 
+     RowBox[{"Length", "[", "zerosRaw", "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{
+     "\"\<Successfully loaded \>\"", ",", "totalZeros", ",", 
+      "\"\< zeroes.\>\""}], "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", 
+     "\"\<\\n=== 2. RUNNING CALCULATIONS (250-DIGIT PRECISION GUARD) ===\>\"",
+      "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"LaunchKernels", "[", "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"timing", "=", 
+     RowBox[{"AbsoluteTiming", "[", 
+      RowBox[{
+       RowBox[{"computedParameters", "=", 
+        RowBox[{"ParallelTable", "[", 
+         RowBox[{
+          RowBox[{"Module", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+             "gamma", ",", "rho", ",", "zetaPrime", ",", "amp", ",", "ph"}], 
+             "}"}], ",", 
+            RowBox[{"(*", 
+             RowBox[{
+             "250", " ", "digits", " ", "perfectly", " ", "protects", " ", 
+              "the", " ", "decimal", " ", "places", " ", "against", " ", 
+              "massive", " ", "y0", " ", "exponents"}], "*)"}], 
+            RowBox[{
+             RowBox[{"gamma", "=", 
+              RowBox[{"zerosRaw", "[", 
+               RowBox[{"[", "i", "]"}], "]"}]}], ";", 
+             RowBox[{"(*", 
+              RowBox[{
+               RowBox[{"Already", " ", "parsed", " ", "as", " ", "250"}], "-", 
+               RowBox[{"digit", " ", "precision", " ", "above"}]}], "*)"}], 
+             RowBox[{"rho", "=", 
+              RowBox[{
+               RowBox[{"1", "/", "2"}], "+", 
+               RowBox[{"I", "*", "gamma"}]}]}], ";", "\[IndentingNewLine]", 
+             RowBox[{"zetaPrime", "=", 
+              RowBox[{
+               RowBox[{"Zeta", "'"}], "[", "rho", "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"amp", "=", 
+              RowBox[{"1", "/", 
+               RowBox[{"Abs", "[", 
+                RowBox[{"rho", "*", "zetaPrime"}], "]"}]}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"ph", "=", 
+              RowBox[{"Arg", "[", 
+               RowBox[{"rho", "*", "zetaPrime"}], "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"{", 
+              RowBox[{"amp", ",", "ph"}], "}"}]}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "1", ",", "totalZeros"}], "}"}], ",", 
+          RowBox[{"Method", "->", "\"\<CoarsestGrained\>\""}]}], "]"}]}], 
+       ";"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Completed in \>\"", ",", 
+      RowBox[{
+       RowBox[{"timing", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "/", "60.0"}], ",", 
+      "\"\< minutes.\>\""}], "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<\\n=== 3. EXPORTING PARAMETER FILES ===\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"amplitudes", "=", 
+     RowBox[{"computedParameters", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"phases", "=", 
+     RowBox[{"computedParameters", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"alphaFile", "=", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{"targetDirectory", ",", "\"\<high_prec_alpha.txt\>\""}], "}"}],
+       "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"argFile", "=", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{"targetDirectory", ",", "\"\<high_prec_arg.txt\>\""}], "}"}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Convert", " ", "arbitrary", " ", "precision", " ", "tokens", " ", "to", 
+     " ", "pure", " ", "text", " ", "strings"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"cleanAlphas", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"TextString", "[", 
+        RowBox[{"amplitudes", "[", 
+         RowBox[{"[", "k", "]"}], "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"k", ",", "1", ",", "totalZeros"}], "}"}]}], "]"}]}], ";"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"cleanPhases", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"TextString", "[", 
+        RowBox[{"phases", "[", 
+         RowBox[{"[", "k", "]"}], "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"k", ",", "1", ",", "totalZeros"}], "}"}]}], "]"}]}], ";"}], 
+   "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", 
+     "\"\<Exporting high_prec_alpha.txt as pristine numbers...\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"MODIFICATION", ":", 
+      RowBox[{
+      "StringRiffle", " ", "joins", " ", "them", " ", "with", " ", 
+       "spaces"}]}], ",", 
+     RowBox[{
+     "\"\<Text\>\"", " ", "prevents", " ", "newline", " ", "insertion"}]}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{"alphaFile", ",", 
+      RowBox[{"StringRiffle", "[", 
+       RowBox[{"cleanAlphas", ",", "\"\< \>\""}], "]"}], ",", 
+      "\"\<Text\>\""}], "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", 
+     "\"\<Exporting high_prec_arg.txt as pristine numbers...\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{"argFile", ",", 
+      RowBox[{"StringRiffle", "[", 
+       RowBox[{"cleanPhases", ",", "\"\< \>\""}], "]"}], ",", 
+      "\"\<Text\>\""}], "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", 
+     "\"\<\[Checkmark] SUCCESS: Matching high_prec_alpha.txt and \
+high_prec_arg.txt exported!\>\"", "]"}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.9911052089572353`*^9, 
+  3.991105208974793*^9}},ExpressionUUID->"d3b2cae5-ed6c-4125-8fbb-\
+8bb7001b216f"]
+},
+WindowSize->{808, 911},
+WindowMargins->{{16, Automatic}, {Automatic, 0}},
+FrontEndVersion->"12.3 for Mac OS X x86 (64-bit) (May 11, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"c2fb7a0d-6af2-4d4d-b52c-6356774f71ee"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 8422, 232, 1187, "Input",ExpressionUUID->"d3b2cae5-ed6c-4125-8fbb-8bb7001b216f"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
