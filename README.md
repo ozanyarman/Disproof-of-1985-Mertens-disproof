@@ -14,6 +14,8 @@ Through a systematic expansion of the zero spectrum to 100,000 non-trivial zeros
 
 * **`Mertens-Riemann-zeros-ANALYTICAL-CHECK_RAWDATA-calculation-FINAL.nb`** This notebook creates the amplitude and phase information in regards to the non-trivial Riemann zeta zeros. It outputs two text files that need no manual adjustment.
 
+* **`Mertens-Riemann-zeros-ANALYTICAL-CHECK_RAWDATA-calculation-ULTIMATE.nb`** This notebook replaces the sequential loops of ...FINAL.nb above with a parallelized, 550-digit precision framework to calculate the non-trivial Riemann zero amplitudes and phases. It outputs two text files that need no manual adjustment. I placed it here just to answer any possible critique as to whether precision erosion, numerical drift, or localized rounding artifacts could have compromised the wave alignment tracking space.
+
 * **`Mertens-Riemann-100000zeros-ANALYTICAL-CHECK_Factor-of-2-miscalculation-FINAL.nb`** The definitive forensic execution script and log. It runs our four main Mathematica code strategies to pin down the exact failure mechanism of the alleged historical 1985 disproof:
     * *Code A (Wide Grid Sweep):* Localizes spatial neighborhoods around the LLL target coordinate.
     * *Code B (Integer Destruction Bypass):* Bypasses machine-integer type promotion bugs.
