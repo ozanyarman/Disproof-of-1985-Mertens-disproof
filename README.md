@@ -1,3 +1,5 @@
+**FOR STARTERS, PLEASE SEE:** [Our draft manuscript -5675375- at HAL Science](https://hal.science/view/index/docid/5675375)
+
 # Forensic Computational Audit of the 1985 Mertens Conjecture Disproof
 
 This repository contains the high-precision Wolfram Mathematica ecosystem and underlying dataset used to independently audit, replicate, and deconstruct the celebrated 1985 disproof of the Mertens conjecture by Andrew Odlyzko and Herman te Riele. 
