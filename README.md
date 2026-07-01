@@ -1,4 +1,4 @@
-**FOR STARTERS, PLEASE SEE:** [Our draft manuscript -5675375- at HAL Science](https://hal.science/view/index/docid/5675375)
+**FOR STARTERS, PLEASE SEE:** [Our draft manuscript -5675375- at HAL Science](https://hal.science/hal-05675375)
 
 # Forensic Computational Audit of the 1985 Mertens Conjecture Disproof
 
